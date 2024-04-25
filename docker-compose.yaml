@@ -14,6 +14,8 @@ services:
           - pg.${DOMAIN_NAME}
           - smtp.${DOMAIN_NAME}
           - mail.${DOMAIN_NAME}
+          - ${DOMAIN_NAME}
+          - auth.${DOMAIN_NAME}
     healthcheck:
       test: for port in 25 80 443 5432; do /usr/bin/nc -z 127.0.0.1 $$port; done
       interval: 3s
@@ -41,8 +43,6 @@ services:
       MP_SMTP_AUTH: ${ADMIN_USERNAME}:${ADMIN_PASSWORD}
     volumes:
       - ./certs:/etc/mailpit/certs
-    ports:
-      - 8025:8025
     command:
       - --smtp-tls-cert
       - /etc/mailpit/certs/tls.crt
@@ -82,9 +82,6 @@ services:
     volumes:
       - ${ROOT_CA_PEM}:/etc/ssl/certs/root-ca.pem
       - ./services/kratos/etc/kratos:/etc/kratos
-    ports:
-      - 4433:4433
-      - 4434:4434
     command: [
       serve,
       --config, /etc/kratos/config.yaml,
@@ -102,15 +99,15 @@ services:
   app:
     image: docker.io/oryd/kratos-selfservice-ui-node:v1.1.0
     environment:
-      PORT: 4455
       SECURITY_MODE: ""
-      KRATOS_PUBLIC_URL: http://kratos:4433/
-      KRATOS_BROWSER_URL: http://127.0.0.1:4433/
+      KRATOS_PUBLIC_URL: https://auth.local.test/
+      KRATOS_BROWSER_URL: https://auth.local.test/
       COOKIE_SECRET: ${COOKIE_SECRET}
       CSRF_COOKIE_NAME: ${CSRF_COOKIE_NAME}
       CSRF_COOKIE_SECRET: ${CSRF_COOKIE_SECRET}
-    ports:
-      - 4455:4455
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/root-ca.pem
+    volumes:
+      - ${ROOT_CA_PEM}:/etc/ssl/certs/root-ca.pem
 
 networks:
   default:

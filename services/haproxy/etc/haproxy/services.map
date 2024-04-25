@@ -1,3 +1,5 @@
 pg    postgres
 smtp  mailpit
 mail  mailpit
+app   app
+auth  kratos

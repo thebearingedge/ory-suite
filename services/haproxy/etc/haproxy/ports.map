@@ -1,3 +1,5 @@
 pg       5432
 smtp     1025
 mail     8025
+app      3000
+auth     4433
