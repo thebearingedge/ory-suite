@@ -78,6 +78,7 @@ services:
     environment:
       DSN: postgres://kratos:kratos@pg.${DOMAIN_NAME}/kratos?sslmode=disable
       SERVE_PUBLIC_BASE_URL: https://auth.${DOMAIN_NAME}/
+      SERVE_ADMIN_BASE_URL: https://kratos:4434/
       COOKIES_DOMAIN: ${DOMAIN_NAME}
       COURIER_SMTP_CONNECTION_URI: smtps://${ADMIN_USERNAME}:${ADMIN_PASSWORD}@smtp.${DOMAIN_NAME}:25
       SELFSERVICE_DEFAULT_BROWSER_RETURN_URL: https://${DOMAIN_NAME}/

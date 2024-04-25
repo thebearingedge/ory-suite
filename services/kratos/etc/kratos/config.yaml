@@ -4,8 +4,6 @@ serve:
   public:
     cors:
       enabled: true
-  admin:
-    base_url: http://kratos:4434/
 
 selfservice:
   methods:
