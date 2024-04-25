@@ -2,17 +2,12 @@ version: v1.1.0
 
 serve:
   public:
-    base_url: https://auth.local.test/
     cors:
       enabled: true
   admin:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: https://local.test/
-  allowed_return_urls:
-    - https://local.test
-
   methods:
     password:
       enabled: true
@@ -30,37 +25,23 @@ selfservice:
       enabled: true
 
   flows:
-    error:
-      ui_url: https://local.test/error
-
     settings:
-      ui_url: https://local.test/settings
       privileged_session_max_age: 15m
       required_aal: highest_available
 
     recovery:
       enabled: true
-      ui_url: https://local.test/recovery
       use: code
 
     verification:
       enabled: true
-      ui_url: https://local.test/verification
       use: code
-      after:
-        default_browser_return_url: https://local.test/
-
-    logout:
-      after:
-        default_browser_return_url: https://local.test/login
 
     login:
-      ui_url: https://local.test/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: https://local.test/registration
       after:
         password:
           hooks:
@@ -92,6 +73,3 @@ identity:
 
 feature_flags:
   use_continue_with_transitions: true
-
-cookies:
-  domain: local.test

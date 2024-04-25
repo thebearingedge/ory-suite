@@ -77,7 +77,18 @@ services:
     image: docker.io/oryd/kratos:v1.1.0-distroless
     environment:
       DSN: postgres://kratos:kratos@pg.${DOMAIN_NAME}/kratos?sslmode=disable
+      SERVE_PUBLIC_BASE_URL: https://auth.${DOMAIN_NAME}/
+      COOKIES_DOMAIN: ${DOMAIN_NAME}
       COURIER_SMTP_CONNECTION_URI: smtps://${ADMIN_USERNAME}:${ADMIN_PASSWORD}@smtp.${DOMAIN_NAME}:25
+      SELFSERVICE_DEFAULT_BROWSER_RETURN_URL: https://${DOMAIN_NAME}/
+      SELFSERVICE_FLOWS_ERROR_UI_URL: https://${DOMAIN_NAME}/error
+      SELFSERVICE_FLOWS_REGISTRATION_UI_URL: https://${DOMAIN_NAME}/registration
+      SELFSERVICE_FLOWS_RECOVERY_UI_URL: https://${DOMAIN_NAME}/recovery
+      SELFSERVICE_FLOWS_VERIFICATION_UI_URL: https://${DOMAIN_NAME}/verification
+      SELFSERVICE_FLOWS_VERIFICATION_AFTER_DEFAULT_BROWSER_RETURN_URL: https://${DOMAIN_NAME}/
+      SELFSERVICE_FLOWS_SETTINGS_UI_URL: https://${DOMAIN_NAME}/settings
+      SELFSERVICE_FLOWS_LOGIN_UI_URL: https://${DOMAIN_NAME}/login
+      SELFSERVICE_FLOWS_LOGOUT_AFTER_DEFAULT_BROWSER_RETURN_URL: https://${DOMAIN_NAME}/login
       LOG_LEVEL: trace
     volumes:
       - ${ROOT_CA_PEM}:/etc/ssl/certs/root-ca.pem
