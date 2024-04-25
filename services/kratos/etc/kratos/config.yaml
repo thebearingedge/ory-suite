@@ -68,9 +68,7 @@ selfservice:
             - hook: show_verification_ui
 
 log:
-  level: debug
   format: text
-  leak_sensitive_values: true
 
 secrets:
   cookie:
@@ -91,10 +89,6 @@ identity:
   schemas:
     - id: default
       url: file:///etc/kratos/schemas/identity.schema.json
-
-courier:
-  smtp:
-    connection_uri: smtps://admin:password@smtp.local.test:25?/skip_ssl_verify=true
 
 feature_flags:
   use_continue_with_transitions: true
