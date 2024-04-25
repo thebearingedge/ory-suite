@@ -2,6 +2,8 @@ services:
 
   haproxy:
     image: docker.io/haproxytech/haproxy-alpine:2.9.7
+    environment:
+      DOMAIN_NAME: ${DOMAIN_NAME}
     volumes:
       - ./services/haproxy/etc/haproxy:/etc/haproxy
       - ./certs/tls.pem:/etc/ssl/certs/tls.pem
