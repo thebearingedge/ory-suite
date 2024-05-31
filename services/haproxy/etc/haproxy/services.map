@@ -1,7 +1,8 @@
-pg    postgres
-db    pgweb
-smtp  mailpit
-mail  mailpit
-app   app
-auth  kratos
-admin kratos
+pg     postgres
+db     pgweb
+smtp   mailpit
+mail   mailpit
+app    app
+auth   kratos
+admin  kratos
+openid hydra

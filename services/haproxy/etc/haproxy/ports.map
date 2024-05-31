@@ -5,3 +5,4 @@ mail     8025
 app      3000
 auth     4433
 admin    4434
+openid   4444

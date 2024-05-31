@@ -109,9 +109,8 @@ services:
       SELFSERVICE_FLOWS_SETTINGS_UI_URL: https://${DOMAIN_NAME}/settings
       SELFSERVICE_FLOWS_LOGIN_UI_URL: https://${DOMAIN_NAME}/login
       SELFSERVICE_FLOWS_LOGOUT_AFTER_DEFAULT_BROWSER_RETURN_URL: https://${DOMAIN_NAME}/login
-      # OAUTH2_PROVIDER_URL: https://openid.${DOMAIN_NAME}
+      OAUTH2_PROVIDER_URL: https://openid.${DOMAIN_NAME}
       LOG_LEVEL: trace
-      # HYDRA_ADMIN_URL: https://openid.${DOMAIN_NAME}/
     volumes:
       - ${ROOT_CA_PEM}:/etc/ssl/certs/root-ca.pem
       - ./services/kratos/etc/kratos:/etc/kratos
@@ -146,6 +145,26 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
+
+  hydra:
+    image: docker.io/oryd/hydra:v2.2.0-distroless
+    environment:
+      DSN: postgres://hydra:hydra@pg.${DOMAIN_NAME}/hydra?sslmode=disable
+    volumes:
+      - ./services/hydra/etc/hydra:/etc/hydra
+    command: [
+      serve,
+      --config, /etc/hydra/config.yaml,
+      all,
+      --dev
+    ]
+    depends_on:
+      haproxy:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      hydra_migrate:
+        condition: service_completed_successfully
 
   app:
     image: docker.io/oryd/kratos-selfservice-ui-node:v1.1.0
