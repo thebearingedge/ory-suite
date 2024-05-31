@@ -1,3 +1,5 @@
+set dotenv-load
+
 [private]
 default:
   @just --list --unsorted --list-heading '' --list-prefix ''
